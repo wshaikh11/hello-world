@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.afour.erms.test.RecruitmentServiceTest
+-------------------------------------------------------------------------------
+Tests run: 14, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.28 s - in com.afour.erms.test.RecruitmentServiceTest

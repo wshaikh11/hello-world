@@ -1,0 +1,8 @@
+com.afour.recruitment
+com.afour.recruitment.config
+com.afour.recruitment.controller
+com.afour.recruitment.exception
+com.afour.recruitment.model
+com.afour.recruitment.repository
+com.afour.recruitment.service
+com.afour.recruitment.serviceImpl

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: RecruitmentService
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: wasim.s
+Implementation-Vendor-Id: RecruitmentService
+Build-Jdk: 1.8.0_66
+Implementation-URL: https://projects.spring.io/spring-boot/#/spring-bo
+ ot-starter-parent/RecruitmentService
+Created-By: Maven Integration for Eclipse
+

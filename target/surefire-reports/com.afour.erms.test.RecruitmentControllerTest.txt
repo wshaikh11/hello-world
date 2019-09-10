@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.afour.erms.test.RecruitmentControllerTest
+-------------------------------------------------------------------------------
+Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.885 s - in com.afour.erms.test.RecruitmentControllerTest

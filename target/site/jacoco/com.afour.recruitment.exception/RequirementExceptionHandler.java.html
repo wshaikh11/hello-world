@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RequirementExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RecruitmentService</a> &gt; <a href="index.source.html" class="el_package">com.afour.recruitment.exception</a> &gt; <span class="el_source">RequirementExceptionHandler.java</span></div><h1>RequirementExceptionHandler.java</h1><pre class="source lang-java linenums">package com.afour.recruitment.exception;
+
+import java.util.UUID;
+import javax.persistence.EntityNotFoundException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
+import org.springframework.web.server.ResponseStatusException;
+
+@ControllerAdvice
+<span class="fc" id="L16">public class RequirementExceptionHandler {</span>
+<span class="fc" id="L17">	UUID uuid = UUID.randomUUID();</span>
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler
+	ErrorMessage numberFormatException(NumberFormatException e) {
+<span class="nc" id="L23">		return new ErrorMessage(uuid.toString(), HttpStatus.BAD_REQUEST.toString(), e.getMessage());</span>
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler
+	ErrorMessage entityNotFoundException(EntityNotFoundException e) {
+<span class="fc" id="L30">		return new ErrorMessage(uuid.toString(), HttpStatus.NOT_FOUND.toString(), e.getMessage());</span>
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler
+	ErrorMessage missingServletRequestPartException(MissingServletRequestPartException e) {
+<span class="nc" id="L37">		return new ErrorMessage(uuid.toString(), HttpStatus.BAD_REQUEST.toString(), e.getMessage());</span>
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+	@ExceptionHandler
+	ErrorMessage httpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
+<span class="fc" id="L44">		return new ErrorMessage(uuid.toString(), HttpStatus.METHOD_NOT_ALLOWED.toString(), e.getMessage());</span>
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@ExceptionHandler
+	ErrorMessage responseStatusException(ResponseStatusException e) {
+<span class="fc" id="L51">		return new ErrorMessage(uuid.toString(), HttpStatus.NO_CONTENT.toString(), e.getMessage());</span>
+	}
+
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	@ResponseStatus(HttpStatus.CONFLICT)
+	public @ResponseBody ErrorMessage handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+<span class="fc" id="L57">		return new ErrorMessage(uuid.toString(), HttpStatus.CONFLICT.toString(), ex.getMessage());</span>
+	}
+
+	@ResponseBody
+	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler
+	ErrorMessage exceptionHandler(Exception e) {
+<span class="fc" id="L64">		return new ErrorMessage(uuid.toString(), HttpStatus.INTERNAL_SERVER_ERROR.toString(), e.getMessage());</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>

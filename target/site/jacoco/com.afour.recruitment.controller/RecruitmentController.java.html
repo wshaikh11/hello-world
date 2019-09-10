@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RecruitmentController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">RecruitmentService</a> &gt; <a href="index.source.html" class="el_package">com.afour.recruitment.controller</a> &gt; <span class="el_source">RecruitmentController.java</span></div><h1>RecruitmentController.java</h1><pre class="source lang-java linenums">package com.afour.recruitment.controller;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import com.afour.recruitment.model.Requirement;
+import com.afour.recruitment.service.RecruitmentService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(description = &quot;REST Apis for CRUD operation on requirement and Updating Status of requiremet i.e Open and Close &quot;)
+@RestController
+@RequestMapping(produces = &quot;application/hal+json&quot;)
+@CrossOrigin(value = { &quot;*&quot; }, exposedHeaders = { &quot;Content-Disposition&quot; })
+<span class="fc" id="L29">public class RecruitmentController {</span>
+
+	@Autowired
+	RecruitmentService recruitmentService;
+
+	@PostMapping(&quot;/requirements&quot;)
+	@ApiOperation(value = &quot;Save Requirement&quot;)
+	public ResponseEntity&lt;Requirement&gt; saveRequirement(@RequestBody Requirement requirement) {
+<span class="fc" id="L37">		return recruitmentService.saveRequirement(requirement);</span>
+	}
+
+	@PutMapping(&quot;/requirements/{requirementId}&quot;)
+	@ApiOperation(value = &quot;Update Requirement by Id&quot;)
+	public ResponseEntity&lt;Requirement&gt; updateRequirement(@PathVariable(&quot;requirementId&quot;) long requirementId,
+			@Valid @RequestBody Requirement requirement) {
+<span class="fc" id="L44">		return recruitmentService.updateRequirement(requirementId, requirement);</span>
+	}
+
+	@GetMapping(value = &quot;/requirements/{requirementId}&quot;)
+	@ApiOperation(value = &quot;Get Requirement by Id&quot;)
+	public ResponseEntity&lt;Requirement&gt; getRequirementById(@PathVariable(&quot;requirementId&quot;) long requirementId) {
+<span class="fc" id="L50">		return recruitmentService.getRequirementById(requirementId);</span>
+	}
+
+	/*
+	 * @DeleteMapping(&quot;/requirements/{requirementId}&quot;)
+	 * 
+	 * @ApiOperation(value=&quot;Delete Requirement&quot;) public ResponseEntity&lt;String&gt;
+	 * deleteRequirement(@PathVariable(&quot;requirementId&quot;) long requirementId) { return
+	 * recruitmentService.deleteRequirement(requirementId); }
+	 */
+
+	@GetMapping(&quot;/requirements&quot;)
+	@ApiOperation(value = &quot;Get All Requirements&quot;)
+	public ResponseEntity&lt;List&lt;Requirement&gt;&gt; getAllRequirement() {
+<span class="fc" id="L64">		return recruitmentService.getAllRequirements();</span>
+	}
+
+	@PutMapping(&quot;/requirements/{requirementId}/setStatus&quot;)
+	@ApiOperation(value = &quot;Set Requirement Status as 'Open' or 'Close'&quot;)
+	public ResponseEntity&lt;Requirement&gt; setRequirementStatus(@PathVariable(&quot;requirementId&quot;) long requirementId,
+			@RequestParam(name = &quot;status&quot;, required = true) String requirementStatus) {
+<span class="fc" id="L71">		return recruitmentService.setRequirementStatus(requirementId, requirementStatus);</span>
+	}
+
+	@GetMapping(&quot;/requirements/status/{requirementStatus}&quot;)
+	@ApiOperation(value = &quot;Get Requirement List By Status i.e Open or Close&quot;)
+	public ResponseEntity&lt;List&lt;Requirement&gt;&gt; getRequirementsByStatus(
+			@PathVariable(&quot;requirementStatus&quot;) String requirementStatus) {
+<span class="fc" id="L78">		return recruitmentService.getRequirementByStatus(requirementStatus);</span>
+	}
+
+	@GetMapping(&quot;/requirements/filter&quot;)
+	@ApiOperation(value = &quot;Get Filtered Requirements By Date&quot;)
+	public ResponseEntity&lt;List&lt;Requirement&gt;&gt; filterRequirementByDate(
+			@RequestParam(&quot;startDate&quot;) @DateTimeFormat(iso = ISO.DATE) LocalDate openDate1,
+			@RequestParam(value = &quot;endDate&quot;, required = false) @DateTimeFormat(iso = ISO.DATE) LocalDate openDate2) {
+
+<span class="fc bfc" id="L87" title="All 2 branches covered.">		if (openDate2 == null) {</span>
+<span class="fc" id="L88">			LocalDate todayDate = LocalDate.now();</span>
+<span class="fc" id="L89">			DateTimeFormatter.ofPattern(&quot;yyyy/MM/dd&quot;).format(todayDate);</span>
+<span class="fc" id="L90">			openDate2 = todayDate;</span>
+		}
+
+<span class="fc" id="L93">		return recruitmentService.filterRequirementByDate(openDate1, openDate2);</span>
+
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.0.201801022044</span></div></body></html>
